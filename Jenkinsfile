@@ -21,6 +21,7 @@ pipeline
           steps
           {
              // sh 'GIT url is ${GIT_URL}'
+              mail subject: "build started on branch ${env.GIT_BRANCH} with it build id ${env.BUILD_ID}", to: 'dilip.abcdefg@gmail.com', from: 'dilip@jenkins.in'
               git branch "${params.branch}", url: 'https://github.com/krishnadilip/game-of-life.git'
               input 'continue to next stage? '
               //input message: 'continue to next stage? ', submitter: 'krishna'
@@ -38,15 +39,8 @@ pipeline
                 echo env.main 
                 timeout(time:10, unit:'MINUTES' )
                 sh 'mvn package'  
-            }
-            stash includes: '**/gameoflife.war', name: 'golwar'
+            } 
       }
-      stage('redhatserver')
-      {
-          agent{label 'rhel'}
-          steps{
-              unstash name: 'golwar'
-          }
       }
   }
   post{
