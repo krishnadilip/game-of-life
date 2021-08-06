@@ -11,8 +11,6 @@ pipeline
   environment{
       main = 'frompipeline'
   }
-  options{
-      retry(2)
   }
   stages
   {
